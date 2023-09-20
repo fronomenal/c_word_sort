@@ -96,14 +96,13 @@ unsigned int word_sort( const char *src, char *dst, unsigned int dst_len,
         
     }
 
-    if ( dst_len - 1 == space_count ){
+    if ( dst_len - 1 == space_count ) {
 
         dst[0] = '\n';
-        return 0;
 
-        }
+    }
 
-    if ( char_count){
+    if ( char_count) {
 
         all_words(tree_root);
         dst[g_buffer_cap] = '\0';
@@ -111,8 +110,8 @@ unsigned int word_sort( const char *src, char *dst, unsigned int dst_len,
         return char_count;
 
     }
-
     
+    return 0;
 
 }
 
@@ -163,7 +162,7 @@ WordTree *add_word(WordTree *t, char *w)
         t->count++; 
     else if ( (g_flags == 1 || g_flags == 3)? !(cond < 0) : cond < 0) // insert word based on flag
         t->left = add_word(t->left, w);
-    else // insert word based on flag
+    else // insert word base on flag
         t->right = add_word(t->right, w);
 
     return t;
