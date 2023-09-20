@@ -8,7 +8,8 @@
 
 #define MAX_WORD 45
 
-typedef struct WordTree { // BST for sorting and searching words
+// BST for sorting and searching words
+typedef struct WordTree { 
     char    *word; 
     int     count; 
     struct  WordTree *left;
@@ -268,7 +269,7 @@ int main(){
         got_count = word_sort(test_sort[i].with, got_buffer, buff_size, 0);
 
         printf(
-            "\nTest Sort %d got => '%s' %d want => '%s' %d: ", 
+            "\nTestsuite %d test Sort got => '%s' %d want => '%s' %d: ", 
             i, got_buffer, test_sort[i].want.count,
             test_sort[i].want.srt_words, got_count 
             );
@@ -282,8 +283,8 @@ int main(){
         got_count = word_sort(test_flags[i].with, got_buffer_f, buff_size, test_flags[i].flag);
 
         printf(
-            "\nTest Flags %d got => '%s' %d want => '%s' %d: ", 
-            i, got_buffer_f, test_flags[i].want.count,
+            "\nTestsuite %d test Flags %u got => '%s' %d want => '%s' %d: ", 
+            i, test_flags[i].flag , got_buffer_f, test_flags[i].want.count,
             test_flags[i].want.srt_words, got_count 
             );
         assert( ( strcmp(test_flags[i].want.srt_words, got_buffer_f) == 0 ) );
