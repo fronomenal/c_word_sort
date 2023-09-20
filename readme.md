@@ -6,5 +6,4 @@ Written in:
 * c
 
 ### Test
-Project uses the codeblocks IDE and can be easily imported.
 run `make test` in the project directory
