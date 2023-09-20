@@ -101,7 +101,7 @@ unsigned int word_sort( const char *src, char *dst, unsigned int dst_len, unsign
     if ( dst_len - 1 == space_count ) 
         dst[0] = '\n';
 
-    if ( char_count) {
+    if (char_count) {
 
         all_words(tree_root);
         dst[g_buffer_cap] = '\0';
@@ -157,7 +157,7 @@ WordTree *add_word(WordTree *t, char *w)
     } else if (
         (cond = (g_flags == 2 || g_flags == 3)? 
         strcasecmp(w, t->word) : strcmp(w, t->word) ) == 0
-        ) //word exists, inc count
+    ) //word exists, inc count
         t->count++; 
     else if ( (g_flags == 1 || g_flags == 3)? !(cond < 0) : cond < 0) // insert word based on flag
         t->left = add_word(t->left, w);
@@ -168,6 +168,8 @@ WordTree *add_word(WordTree *t, char *w)
 
 }
 
+// traverses tree and sets buffer to node words.
+// Will free tree and allocated words
 void all_words(WordTree *t)
 {
     if (t != NULL) {
