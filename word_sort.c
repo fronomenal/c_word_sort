@@ -25,8 +25,7 @@ char *g_dest = NULL;
 unsigned int g_buffer_cap;
 
 
-unsigned int word_sort( const char *src, char *dst, unsigned int dst_len, 
-    unsigned int flags )
+unsigned int word_sort( const char *src, char *dst, unsigned int dst_len, unsigned int flags )
 {
 
     
@@ -75,10 +74,12 @@ unsigned int word_sort( const char *src, char *dst, unsigned int dst_len,
 
         //current character is last of word
         if ( src[1] == '\0' ){ 
+
             word_end = true;
             if (isspace(c))
                 space_count++;
             src++;
+
         }
 
         if (word_end) {
@@ -96,11 +97,8 @@ unsigned int word_sort( const char *src, char *dst, unsigned int dst_len,
         
     }
 
-    if ( dst_len - 1 == space_count ) {
-
+    if ( dst_len - 1 == space_count ) 
         dst[0] = '\n';
-
-    }
 
     if ( char_count) {
 
@@ -166,11 +164,13 @@ WordTree *add_word(WordTree *t, char *w)
         t->right = add_word(t->right, w);
 
     return t;
+
 }
 
 void all_words(WordTree *t)
 {
     if (t != NULL) {
+
         all_words(t->left);
 
         for (int i = 0; i < t->count; i++){
@@ -189,6 +189,7 @@ void all_words(WordTree *t)
         all_words(t->right);
 
         free(t);
+        
     }
 
     return;
