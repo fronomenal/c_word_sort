@@ -38,7 +38,7 @@ unsigned int word_sort( const char *src, char *dst, unsigned int dst_len, unsign
     g_dest = dst;
     g_buffer_cap = -1;
 
-    // Get words and place words into WordTree
+    // strip white spaces and get words for inserting into bst
     while( ( c = *src ) != '\0' ){
 
         //check to ensure stripped src text fits dst_len
@@ -189,7 +189,7 @@ void all_words(WordTree *t)
         all_words(t->right);
 
         free(t);
-        
+
     }
 
     return;
@@ -291,7 +291,7 @@ int main(){
         printf("Passed");
     }
     
-    printf("\nTest buffer is less than stripped source: ");
+    printf("\nTest returns 0 when buffer is less than stripped source: ");
     char test_lesser_buffer[] = "words must have less buffer";
     char lesser_buffer[10];
     got_count = word_sort(test_lesser_buffer, lesser_buffer, 10, 0);
