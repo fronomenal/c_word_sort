@@ -98,9 +98,6 @@ unsigned int word_sort( const char *src, char *dst, unsigned int dst_len, unsign
         
     }
 
-    if ( dst_len - 1 == space_count ) 
-        dst[0] = '\n';
-
     if (char_count) {
 
         all_words(tree_root);
@@ -110,6 +107,7 @@ unsigned int word_sort( const char *src, char *dst, unsigned int dst_len, unsign
 
     }
     
+    dst[0] = '\n';
     return 0;
 
 }
