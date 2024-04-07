@@ -10,13 +10,13 @@
 
 // BST for sorting and searching words
 typedef struct WordTree { 
-    char    *word; 
     int     count; 
     struct  WordTree *left;
     struct  WordTree *right;
+    char    word[]; 
 } WordTree;
 
-WordTree *get_word_tree( void );
+WordTree *get_word_tree(unsigned int word_cap);
 void free_word_tree(WordTree *);
 WordTree *add_word( WordTree *, char * );
 void all_words( WordTree *);
@@ -113,10 +113,13 @@ unsigned int word_sort( const char *src, char *dst, unsigned int dst_len, unsign
 }
 
 // get WordTree instance
-WordTree *get_word_tree(void)
+WordTree *get_word_tree(unsigned int word_cap)
 {
-    WordTree *wt = (WordTree *) malloc(sizeof(WordTree));
-    wt->left = wt->right = NULL;
+    WordTree *wt = (WordTree *) malloc(sizeof(WordTree) + sizeof(char[word_cap]));
+	
+	if(wt)
+		wt->left = wt->right = NULL;
+	
     return wt;
 
 }
@@ -139,18 +142,14 @@ void free_word_tree(WordTree *t)
 WordTree *add_word(WordTree *t, char *w)
 {
     int cond;
-    char *word_copy;
 
     if (t == NULL) { //
 
-        t = get_word_tree();
-
-        word_copy = (char *) malloc(strlen(w)+1);
-        if (word_copy)
-            strcpy(word_copy, w);
-
-        t->word = word_copy;
-        t->count = 1;
+        t = get_word_tree(strlen(w)+1);
+        if (t){
+            strcpy(t->word, w);
+			t->count = 1;
+		}
 
     } else if (
         (cond = (g_flags == 2 || g_flags == 3)? 
@@ -184,8 +183,6 @@ void all_words(WordTree *t)
             g_buffer_cap += word_size;
 
         }
-
-        free(t->word);
 
         all_words(t->right);
 
