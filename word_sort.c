@@ -6,7 +6,7 @@
 #include <assert.h>
 #include "word_sort.h"
 
-#define MAX_WORD 45
+#define MAX_WORD 46
 
 // BST for sorting and searching words
 typedef struct WordTree { 
@@ -84,9 +84,16 @@ unsigned int word_sort( const char *src, char *dst, unsigned int dst_len, unsign
         }
 
         if (word_end) {
+			
+			if ( index >= MAX_WORD ) //truncate word if it's too long
+				index = MAX_WORD - 1;
             
             word_builder[index] = '\0';
             tree_root = add_word(tree_root, word_builder);
+			if ( !tree_root ) { 
+				free_word_tree(tree_root);
+				return 0;
+			}
 
             char_count += 1;
             index = 0;
@@ -127,13 +134,11 @@ WordTree *get_word_tree(unsigned int word_cap)
 void free_word_tree(WordTree *t)
 {   
     
-    if(t == NULL)
-        return;
-
-    free_word_tree(t->left);
-    free_word_tree(t->right);
-
-    free(t);
+    if(t != NULL){
+		free_word_tree(t->left);
+		free_word_tree(t->right);
+		free(t);
+	}
 
     return;
 
@@ -156,7 +161,7 @@ WordTree *add_word(WordTree *t, char *w)
         strcasecmp(w, t->word) : strcmp(w, t->word) ) == 0
     ) //word exists, inc count
         t->count++; 
-    else if ( (g_flags == 1 || g_flags == 3)? !(cond < 0) : cond < 0) // insert word based on flag
+    else if ( (g_flags == 1 || g_flags == 3)? (cond > 0) : cond < 0) // insert word based on flag
         t->left = add_word(t->left, w);
     else // insert word base on flag
         t->right = add_word(t->right, w);
