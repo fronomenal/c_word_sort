@@ -11,6 +11,7 @@
 // BST for sorting and searching words
 typedef struct WordTree { 
     int     count; 
+	short	size;
     struct  WordTree *left;
     struct  WordTree *right;
     char    word[]; 
@@ -119,8 +120,10 @@ WordTree *get_word_tree(unsigned int word_cap)
 {
     WordTree *wt = (WordTree *) malloc(sizeof(WordTree) + sizeof(char[word_cap]));
 	
-	if(wt)
+	if(wt){
+		wt->size = word_cap;
 		wt->left = wt->right = NULL;
+	}
 	
     return wt;
 
@@ -175,11 +178,9 @@ void all_words(WordTree *t, char* *dst_ptr)
 
         for (int i = 0; i < t->count; i++){
 
-            unsigned int word_size = strlen(t->word) + 1;
-
             strcpy(*dst_ptr, t->word);
-            (*dst_ptr)[word_size - 1] = ' ';
-            *dst_ptr += word_size;
+            (*dst_ptr)[t->size - 1] = ' ';
+            *dst_ptr += t->size;
 
         }
 
@@ -226,14 +227,14 @@ int main(){
     test_sort[4].want.count = 27;
 
 
+    struct test_suite test_flags[5];
+
     char* *flags = calloc(4, sizeof(char *));
     flags[0] = "No Flag";
     flags[1] = "Reversed Flag";
     flags[2] = "Case-Insensitive Flag";
     flags[3] = "Reversed & Case-Insensitive Flags";
 
-
-    struct test_suite test_flags[5];
     strcpy( test_flags[0].with, " the \tcat sat is Scared \n" );
     strcpy( test_flags[0].want.srt_words, "Scared cat is sat the" );
     test_flags[0].want.count = 22;
